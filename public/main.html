@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Add Line Items</title>
+  <link href="https://fonts.cdnfonts.com/css/diner" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="squishable-gourmet-grilled-cheese-squishable-removebg-preview.png">
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <style>
+    
+  </style>
+  
+  <script>
+    let counter = 0;
+    function addLineItem() {
+      counter = counter + 1
+      var container = document.getElementById('line-item-container');
+      var newItem = document.createElement('div');
+      newItem.className = 'line-item';
+      newItem.innerHTML = `<input class="ings" type="text" name="item_${counter}" placeholder="Item">`;
+      container.appendChild(newItem);
+    }
+
+    
+
+  </script>
+</head>
+
+<body>
+  <h1 style="color: aliceblue;font-family: 'Diner', sans-serif;
+  ">Add Line Items</h1>
+  <form id='cheese-form'method="POST">
+    <div id="line-item-container">
+      <div class="line-item">
+        <input class='ings' type="text" name="item_0" placeholder="Item">
+
+      </div>
+    </div>
+    <button type="button" onclick="addLineItem()">Add Another Line Item</button>
+    <br><br>
+    <input id="submit-button" type="submit" value="Submit">
+  </form>
+  
+  <textarea id="output-box"></textarea>
+</body>
+<script>
+    let socket = io();
+    let form = document.getElementById('cheese-form');
+    let output = document.getElementById('output-box');
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      let input = document.getElementsByClassName('ings');
+      if (input.length > 0){
+        let out = {};
+        for (const item of input){
+            out[item.name] = item.value;
+        }
+
+        socket.emit('submission',out)
+      }
+    })
+    socket.on('submission', (chunk) =>{
+      console.log('submission received')
+      
+      output.textContent += chunk.choices[0].delta.content
+      
+    })
+</script>
+
+
+</html>

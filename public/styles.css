@@ -1,0 +1,33 @@
+body,
+head {
+  background-image: url('squishable-gourmet-grilled-cheese-squishable-removebg-preview.png');
+  background-repeat: repeat;
+  background-color: yellow;
+}
+
+.line-item {
+  margin-bottom: 10px;
+
+}
+h1 {
+  font-size: 40px;
+  
+}
+
+#output-box {
+    position: fixed;
+    bottom: 20%;
+    top: 20%;
+    right: 2%;
+    width: 600px;
+  
+    background-color: white;
+    border-style: solid;
+    
+}
+.output-frame {
+    background-color: white;
+    outline: 10px;
+    
+
+}
